@@ -8,6 +8,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserRepository {
 
@@ -62,22 +63,28 @@ public class UserRepository {
         if(tag == null){
             return users;
         }else{
-            tag = tag.toLowerCase();
-            List<UserResponse> filtered = new ArrayList<>();
-
-            for(UserResponse user: users){
-                if(lowercaseTags(user).contains(tag))
-                    filtered.add(user);
-            }
-            return filtered;
+          String  lowercaseTag = tag.toLowerCase();
+            //in kotlin we don't need stream and collect, we will only have filter
+            return users.stream()
+                    .filter(user -> lowercaseTags(user).contains(lowercaseTag))
+                    .collect(Collectors.toList());
+            // filter users by tag
+//            List<UserResponse> filtered = new ArrayList<>();
+//            for(UserResponse user: users){
+//                if(lowercaseTags(user).contains(tag))
+//                    filtered.add(user);
+//            }
         }
     }
     private List<String> lowercaseTags(UserResponse user){
-        List<String> lowercaseTags = new ArrayList<>();
-        for(String t: user.getTags()) {
-            lowercaseTags.add(t.toLowerCase());
-        }
-        return lowercaseTags;
+        return user.getTags().stream()
+                .map(tag -> tag.toLowerCase())
+                .collect(Collectors.toList());
+//        List<String> lowercaseTags = new ArrayList<>();
+//        for(String t: tags) {
+//            lowercaseTags.add(t.toLowerCase());
+//        }
+//        return lowercaseTags;
 
     }
 }
