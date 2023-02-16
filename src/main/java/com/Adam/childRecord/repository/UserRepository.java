@@ -8,6 +8,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserRepository {
@@ -58,6 +59,14 @@ public class UserRepository {
                     Arrays.asList("Friendly", "Outgoing")
             )
     );
+
+    public Optional<UserResponse> findById(String id) {
+        Optional<UserResponse> user = users.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
+        return user;
+    }
+
     public List<UserResponse> findAll(String tag){
 
         if(tag == null){
