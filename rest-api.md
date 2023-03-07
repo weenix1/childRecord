@@ -15,7 +15,7 @@ load user with a particular Tag
 GET /api/users?tag={tag}&name={name}
 
 create new user
-POST /api/createUser
+POST /api/users/createUser
 
 delete user
 DELETE /api/users/{id}
